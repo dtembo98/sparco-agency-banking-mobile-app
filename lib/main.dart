@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Hive.openBox('txnData');
+    // Hive.openBox('txnData');
   }
 
   @override

@@ -6,41 +6,41 @@ class TxnData {
   // @HiveField(0)
   int txnId;
   // @HiveField(1)
-  String service;
+  dynamic service;
   // @HiveField(2)
-  String msisdn;
+  dynamic msisdn;
   // @HiveField(3)
-  String serviceProvider;
+  dynamic serviceProvider;
   // @HiveField(4)
-  String serviceProviderRef;
+  dynamic serviceProviderRef;
   // @HiveField(5)
-  double amount;
+  dynamic amount;
   // @HiveField(6)
-  String desc;
+  dynamic desc;
   // @HiveField(9)
-  double agentsCommission;
+  dynamic agentsCommission;
   // @HiveField(10)
-  double broadpaysCommission;
+  dynamic broadpaysCommission;
   // @HiveField(11)
-  String status;
+  dynamic status;
   // @HiveField(12)
   bool isError;
   // @HiveField(13)
-  String token;
+  dynamic token;
   // @HiveField(14)
-  String meterNumber;
+  dynamic meterNumber;
   // @HiveField(15)
-  String msg;
+  dynamic msg;
   // @HiveField(16)
-  String txnDateTime;
+  dynamic txnDateTime;
   // @HiveField(18)
-  String sender;
+  dynamic sender;
   // @HiveField(19)
-  String recipient;
+  dynamic recipient;
   // @HiveField(20)
-  String created;
+  dynamic created;
   // @HiveField(21)
-  String customerName;
+  dynamic customerName;
 
   TxnData({
     this.txnId,

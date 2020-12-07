@@ -59,10 +59,10 @@ class TxnService {
         return Future.value(_txnData);
       }
     } catch (e) {
-      print(e);
+      // print(e);
       _txnData = TxnData(isError: true);
       // Hive.box('txnData').add(_txnData);
-      print('exception $_txnData');
+      print('exception found here ${e.toString()}');
       return Future.value(_txnData);
     }
   }
