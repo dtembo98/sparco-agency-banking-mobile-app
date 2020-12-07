@@ -21,9 +21,10 @@ class AuthService {
       final response = await http.post('$API_BASE_URL/api/v1/auth/agents/login',
           headers: {'Content-Type': 'application/json'},
           body: json.encode({"mobile_number": phone, "password": password}));
+
       if (response.statusCode == 200) {
         // print("your responce  ${response.body}");
-
+        // print("${response.body}");
         Map resData = json.decode(response.body);
         // print("your responcee  $resData");
         // print("your responcee  ${resData['message']}");
@@ -43,7 +44,8 @@ class AuthService {
       }
     } catch (e) {
       print('error occured');
-      return Future.error(e);
+      return Future.error(
+          'error occured make sure you have internet connection');
     }
   }
 
@@ -51,7 +53,10 @@ class AuthService {
     prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token");
 
+    // final tokenDecode = json.decode(token);
+    print(token);
     if (token != "" && token != null) {
+      // json.decode(token);
       return Future.value(true);
     } else {
       return Future.value(false);
@@ -80,30 +85,62 @@ class AuthService {
   Future<bool> authTxn(String password) async {
     prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token");
+    var authResp = await http
+        .post('$API_BASE_URL/api/v1/auth/agents/authorize',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer $token'
+            },
+            body: json.encode({"password": password}))
+        .then((res) {
+      Map resData = json.decode(res.body);
+      print(resData);
+      if (res.statusCode == 200) {
+        print(resData);
+        if (resData['isAuthorized']) {
+          print(resData);
 
-    try {
-      final response = await http.post(
-          '$API_BASE_URL/api/v1/transaction/authorize',
-          headers: {'Content-Type': 'application/json', 'token': token},
-          body: json.encode({"password": password}));
+          return Future.value(true);
+        } else if (resData['is_error']) {
+          print(resData);
 
-      if (response.statusCode == 200) {
-        Map res_data = json.decode(response.body);
-        print(res_data);
-        if (res_data['is_error']) {
-          return Future.error(res_data['msg']);
+          return Future.error(resData['msg']);
         } else {
-          if (res_data['authorized']) {
-            return Future.value(true);
-          }
-          return Future.error(res_data['msg']);
+          return Future.error(resData['msg']);
         }
-      } else {
-        return Future.error('Error contacting server');
       }
-    } catch (e) {
-      return Future.error(e.toString());
-    }
+    }).catchError((e) => Future.error(e.toString()));
+
+    return authResp;
+
+    // try {
+    //   final response =
+    //       await http.post('$API_BASE_URL/api/v1/auth/agents/authorize',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'Authorization': 'Bearer $token'
+    //           },
+    //           body: json.encode({"password": password}));
+
+    //   if (response.statusCode == 200) {
+    //     Map res_data = json.decode(response.body);
+    //     print(res_data);
+    //     if (res_data['is_error']) {
+    //       return Future.error(res_data['msg']);
+    //     } else {
+    //       if (res_data['isAuthorized']) {
+    //         return Future.value(true);
+    //       }
+    //       // return Future.error(res_data['msg']);
+    //     }
+    //   } else {
+    //     print(response.body);
+
+    //     return Future.error('Error contacting server');
+    //   }
+    // } c
   }
 
   Future<bool> changePassword(

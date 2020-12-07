@@ -5,6 +5,7 @@ import 'package:testingprintpos/services/txn_service.dart';
 import 'package:testingprintpos/services/txn_status_service.dart';
 import 'package:testingprintpos/utils/app_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:testingprintpos/utils/constants.dart';
 
 class CashInPage extends StatefulWidget {
   @override
@@ -13,8 +14,10 @@ class CashInPage extends StatefulWidget {
 
 class _CashInPageState extends State<CashInPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  TextEditingController _msisdnInputController = TextEditingController();
-  TextEditingController _amountInputController = TextEditingController();
+  TextEditingController _msisdnInputController =
+      TextEditingController(text: WalletNumber);
+  TextEditingController _amountInputController =
+      TextEditingController(text: "0.3");
   TextEditingController _refInputController = TextEditingController();
   bool _isLoading = false;
   bool _txnSucceeded = false;
@@ -27,7 +30,8 @@ class _CashInPageState extends State<CashInPage> {
   String _msisdnInputVal;
   String _amountInputVal;
 
-  void _processTxn(String txnType) async {
+  void _processTxn(
+      {@required String txnType, @required String pathName}) async {
     String msisdn = _msisdnInputController.text;
     double amount = double.parse(_amountInputController.text);
     String ref = _refInputController.text;
@@ -37,18 +41,20 @@ class _CashInPageState extends State<CashInPage> {
       _statusMsg = "";
     });
 
-    TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount);
-
+    TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount,
+        pathName: pathName);
+    print(" geting id hhere ${_txnData.txnId}");
     Stream<TxnData> txnStatusStream = TxnStatusService(_txnData.txnId).stream;
 
     txnStatusSub = txnStatusStream.listen((txnData) {
-      String txnStatus = txnData.status;
+      String txnStatus = _txnData.status;
       _txnId = txnData.txnId;
 
       String txnStatusMsg = "";
-
+      print(' data bo be proceesed ${txnStatus}');
+      // print('kllkjdslkfjsldf kljdkfjsd kjslajdakl $txnStatus');
       if (txnStatus == 'TXN_AUTH_PENDING') {
-        txnStatusMsg = 'Waiting For Authorization. TxnID: $_txnId';
+        txnStatusMsg = 'Waiting For Authorization. TxnID: ${_txnData.txnId}';
       } else if (txnStatus == 'TXN_AUTH_UNSUCCESSFUL') {
         txnStatusMsg = 'Transaction Authorization Failed';
         setState(() {
@@ -161,7 +167,8 @@ class _CashInPageState extends State<CashInPage> {
                                   child: Text("Try Again"),
                                   onPressed: () {
                                     //  _clearInputFields();
-                                    _processTxn('cashin');
+                                    _processTxn(
+                                        txnType: 'cashin', pathName: 'cashin');
                                   }),
                         )
                       ],
@@ -185,7 +192,7 @@ class _CashInPageState extends State<CashInPage> {
 
                         authorizeTxnDialog(context, () {
                           // print("Callback Called When Transaction Authorized");
-                          _processTxn('cashin');
+                          _processTxn(txnType: 'cashin', pathName: 'cashin');
                         });
                       }),
           SizedBox(height: 10),

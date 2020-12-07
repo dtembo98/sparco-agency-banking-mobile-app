@@ -1,45 +1,45 @@
 import 'package:hive/hive.dart';
-part "txn_data.g.dart";
+// part "txn_data.g.dart";
 
-@HiveType(typeId: 0)
+// @HiveType(typeId: 0)
 class TxnData {
-  @HiveField(0)
+  // @HiveField(0)
   int txnId;
-  @HiveField(1)
+  // @HiveField(1)
   String service;
-  @HiveField(2)
+  // @HiveField(2)
   String msisdn;
-  @HiveField(3)
+  // @HiveField(3)
   String serviceProvider;
-  @HiveField(4)
+  // @HiveField(4)
   String serviceProviderRef;
-  @HiveField(5)
+  // @HiveField(5)
   double amount;
-  @HiveField(6)
+  // @HiveField(6)
   String desc;
-  @HiveField(9)
+  // @HiveField(9)
   double agentsCommission;
-  @HiveField(10)
+  // @HiveField(10)
   double broadpaysCommission;
-  @HiveField(11)
+  // @HiveField(11)
   String status;
-  @HiveField(12)
+  // @HiveField(12)
   bool isError;
-  @HiveField(13)
+  // @HiveField(13)
   String token;
-  @HiveField(14)
+  // @HiveField(14)
   String meterNumber;
-  @HiveField(15)
+  // @HiveField(15)
   String msg;
-  @HiveField(16)
+  // @HiveField(16)
   String txnDateTime;
-  @HiveField(18)
+  // @HiveField(18)
   String sender;
-  @HiveField(19)
+  // @HiveField(19)
   String recipient;
-  @HiveField(20)
+  // @HiveField(20)
   String created;
-  @HiveField(21)
+  // @HiveField(21)
   String customerName;
 
   TxnData({
@@ -71,10 +71,10 @@ class TxnData {
         msisdn: json["msisdn"],
         serviceProvider: json["service_provider"],
         serviceProviderRef: json["service_provider_ref"],
-        amount: json["amount"],
+        amount: json["total_amount"],
         desc: json["desc"],
-        agentsCommission: json["commission"]["agent"],
-        broadpaysCommission: json["commission"]["broadpay"],
+        agentsCommission: json["agent_commission"],
+        broadpaysCommission: json["bp_commission"],
         status: json["status"],
         isError: json["is_error"],
         token: json["token"],

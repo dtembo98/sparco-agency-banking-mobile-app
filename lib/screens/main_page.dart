@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> _widgetList = [
     HomeWidget(optionStyle: optionStyle),
-    TransactionsWidget(),
+    // TransactionsWidget(),
     ProfileWidget()
   ];
 

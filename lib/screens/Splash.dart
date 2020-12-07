@@ -14,12 +14,17 @@ class _SplashState extends State<Splash> {
 
   Future checkIsLogin() async {
     bool loginStatus = await _authService.checkLoginStatus();
+    print(DateTime);
     Future.delayed(Duration(seconds: 5), () {
-      if (loginStatus) {
-        Navigator.pushReplacementNamed(context, '/home', arguments: "Mundia");
-      } else {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
+      print(loginStatus);
+      // print(DateTime.now());
+      Navigator.of(context).pushReplacementNamed('/login');
+
+      // if (!loginStatus) {
+      //   Navigator.of(context).pushReplacementNamed('/home');
+      // } else {
+      //   Navigator.of(context).pushReplacementNamed('/login');
+      // }
     });
   }
 

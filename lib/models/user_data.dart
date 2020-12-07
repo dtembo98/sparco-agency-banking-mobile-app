@@ -8,25 +8,33 @@ class UserData {
   String address;
   bool isAdmin;
   bool isAgent;
-  double ledgerBalance;
+  int ledgerBalance;
+  int float;
   bool isError;
   String msg;
   String status;
 
   UserData(
-      {this.fname, this.lname, this.phone, this.ledgerBalance, this.isError});
+      {this.fname,
+      this.float,
+      this.msg,
+      this.lname,
+      this.phone,
+      this.ledgerBalance,
+      this.isError});
 
   UserData.fromJson(Map json) {
-    this.fname = json["user"]["first_name"];
-    this.lname = json["user"]["last_name"];
-    this.phone = json["user"]["phone"];
-    this.email = json["user"]["email"];
-    this.nrc = json["user"]["nrc"];
-    this.passport = json["user"]["passport"];
-    this.address = json["user"]["address"];
-    this.isAdmin = json["user"]["is_admin"];
-    this.isAgent = json["user"]["is_agent"];
-    this.ledgerBalance = json["user"]["ledger_balance"];
+    this.fname = json["data"]["firstname"];
+    this.float = json["data"]["float"];
+    this.lname = json["data"]["lastname"];
+    this.phone = json["data"]["mobile_wallet"];
+    this.email = json["data"]["email"];
+    this.nrc = json["data"]["nrc"];
+    this.passport = json["data"]["passport"];
+    this.address = json["data"]["address"];
+    this.isAdmin = json["data"]["is_admin"];
+    this.isAgent = json["data"]["is_agent"];
+    this.ledgerBalance = json["data"]["ledger_balance"];
     this.isError = json["is_error"];
     this.msg = json["msg"];
     this.status = json["status"];

@@ -76,7 +76,7 @@ class RouteGenerator {
         });
       case '/transaction_details':
         return MaterialPageRoute(builder: (_) {
-          return TransactionsWidget();
+          // return TransactionsWidget();
         });
       case '/topup':
         return MaterialPageRoute(builder: (_) {

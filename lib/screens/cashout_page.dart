@@ -25,7 +25,7 @@ class _CashOutPageState extends State<CashOutPage> {
 
   String _amountInputVal;
 
-  void _processTxn(String txnType) async {
+  void _processTxn(String txnType, {@required String pathName}) async {
     String msisdn = _msisdnInputController.text;
     double amount = double.parse(_amountInputController.text);
     String ref = _refInputController.text;
@@ -35,8 +35,8 @@ class _CashOutPageState extends State<CashOutPage> {
       _statusMsg = "";
     });
 
-    TxnData _txnData =
-        await _txnService.processTxn(txnType, msisdn, amount, ref: ref);
+    TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount,
+        ref: ref, pathName: pathName);
 
     String txnStatus = _txnData.status;
 
@@ -142,7 +142,7 @@ class _CashOutPageState extends State<CashOutPage> {
                                   child: Text("Try Again"),
                                   onPressed: () {
                                     //  _clearInputFields();
-                                    _processTxn('cashout');
+                                    _processTxn('cashout', pathName: 'cashout');
                                   }),
                         )
                       ],
@@ -162,7 +162,7 @@ class _CashOutPageState extends State<CashOutPage> {
                         }
                         FocusScope.of(context).requestFocus(FocusNode());
                         authorizeTxnDialog(context, () {
-                          _processTxn('cashin');
+                          _processTxn('cashin', pathName: 'cashin');
                         });
                       }),
           SizedBox(height: 10),

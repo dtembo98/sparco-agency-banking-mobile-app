@@ -23,7 +23,7 @@ class _ServicePageState extends State<ServicePage> {
   int _txnId;
   StreamSubscription txnStatusSub;
 
-  void _submitService() async {
+  void _submitService({@required String pathName}) async {
     String msisdn = _recipientInputController.text;
     double amount = double.parse(_amountInputController.text);
 
@@ -33,7 +33,8 @@ class _ServicePageState extends State<ServicePage> {
 
     await Future.delayed(Duration(seconds: 5));
 
-    TxnData _txnData = await _txnService.processTxn('withdraw', msisdn, amount);
+    TxnData _txnData = await _txnService.processTxn('withdraw', msisdn, amount,
+        pathName: pathName);
     _txnId = _txnData.txnId;
 
     Stream<TxnData> txnStatusStream = TxnStatusService(_txnId).stream;
@@ -122,7 +123,7 @@ class _ServicePageState extends State<ServicePage> {
               : RaisedButton(
                   child: Text("Submit"),
                   onPressed: () {
-                    _submitService();
+                    _submitService(pathName: "withdraw");
                   }),
           SizedBox(height: 10),
         ]),

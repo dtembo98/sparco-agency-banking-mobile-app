@@ -37,7 +37,7 @@ class _TopUpPageState extends State<TopUpPage> {
   final UserService _userService = UserService();
   String _topUpAmount;
   Map<String, dynamic> receiptData;
-  void _processTxn(String txnType) async {
+  void _processTxn(String txnType, {@required String pathName}) async {
     String msisdn = _recipientInputController.text;
     double amount = double.parse(_amountInputController.text);
     String meterNumber = _meterNumberInputController.text;
@@ -48,7 +48,7 @@ class _TopUpPageState extends State<TopUpPage> {
     });
 
     TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount,
-        ref: "", meterNumber: meterNumber);
+        ref: "", meterNumber: meterNumber, pathName: pathName);
 
     String txnStatus = _txnData.status;
     // var _txnDatails = <String, dynamic>{
@@ -219,7 +219,8 @@ class _TopUpPageState extends State<TopUpPage> {
                                     child: Text("Try Again"),
                                     onPressed: () {
                                       //  _clearInputFields();
-                                      _processTxn(_topUpType);
+                                      _processTxn(_topUpType,
+                                          pathName: 'airtime');
                                     }),
                           ),
                           RaisedButton(
@@ -257,7 +258,10 @@ class _TopUpPageState extends State<TopUpPage> {
                           FocusScope.of(context).requestFocus(FocusNode());
 
                           authorizeTxnDialog(context, () {
-                            _processTxn(_topUpType);
+                            _processTxn(
+                              _topUpType,
+                              pathName: "${_pageTitle.toLowerCase()}",
+                            );
                           });
                         }),
           ],

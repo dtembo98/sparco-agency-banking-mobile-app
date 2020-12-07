@@ -26,7 +26,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
   String _msisdnInputVal;
   String _amountInputVal;
 
-  void _processTxn(String txnType) async {
+  void _processTxn(String txnType, {@required String pathName}) async {
     String msisdn = _msisdnInputController.text;
     double amount = double.parse(_amountInputController.text);
     String ref = _refInputController.text;
@@ -36,8 +36,8 @@ class _WithdrawPageState extends State<WithdrawPage> {
       _statusMsg = "";
     });
 
-    TxnData _txnData =
-        await _txnService.processTxn(txnType, msisdn, amount, ref: ref);
+    TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount,
+        ref: ref, pathName: pathName);
 
     print(_txnData.isError);
     print(_txnData.status);
@@ -191,7 +191,8 @@ class _WithdrawPageState extends State<WithdrawPage> {
                                   child: Text("Try Again"),
                                   onPressed: () {
                                     //  _clearInputFields();
-                                    _processTxn('withdraw');
+                                    _processTxn('withdraw',
+                                        pathName: 'withdraw');
                                   }),
                         )
                       ],
@@ -212,7 +213,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
 
                         FocusScope.of(context).requestFocus(FocusNode());
                         authorizeTxnDialog(context, () {
-                          _processTxn('withdraw');
+                          _processTxn('withdraw', pathName: 'withdraw');
                         });
                       }),
           SizedBox(height: 10),

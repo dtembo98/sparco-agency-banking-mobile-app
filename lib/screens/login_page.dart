@@ -2,6 +2,7 @@ import 'package:testingprintpos/models/settings.dart';
 import 'package:testingprintpos/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:testingprintpos/utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -130,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        initialValue: "0973202178",
+                        initialValue: AgentNumber,
                         decoration: InputDecoration(
                             labelText: "Phone Number",
                             hintText: "Enter Your Phone Number",
@@ -147,14 +148,15 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 10,
                       ),
+                      //
                       TextFormField(
-                        initialValue: "broadpay-3766794",
+                        initialValue: AgentPassword,
                         decoration: InputDecoration(
                             labelText: "Password",
                             hintText: "Enter Your Password",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0))),
-                        obscureText: true,
+                        obscureText: false,
                         onSaved: (val) => _password = val,
                         validator: (value) {
                           if (value.isEmpty) {

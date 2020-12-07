@@ -90,12 +90,12 @@ import 'models/txn_data.dart';
 import 'route_generator.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final appDocumentDirectory =
-      await path_provider.getApplicationDocumentsDirectory();
-  Hive.init(appDocumentDirectory.path);
-  Hive.registerAdapter(TxnDataAdapter());
-  await Hive.openBox('txnData');
+  // WidgetsFlutterBinding.ensureInitialized();
+  // final appDocumentDirectory =
+  //     await path_provider.getApplicationDocumentsDirectory();
+  // Hive.init(appDocumentDirectory.path);
+  // Hive.registerAdapter(TxnDataAdapter());
+  // await Hive.openBox('txnData');
 
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => Settings())],

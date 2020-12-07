@@ -1,11 +1,13 @@
+import 'package:testingprintpos/models/user_data.dart';
 import 'package:testingprintpos/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 class TopBottomNav extends StatelessWidget {
   final UserService _userService = UserService();
 
-  Widget _buildLedgerData(context, ledger) {
-    // print('from widget ${ledger["ledgerBalance"]}');
+  Widget _buildLedgerData(context, UserData user) {
+    print('from widget ${user.float}');
+
     return Container(
       // color: Colors.transparent,
       height: 100.0,
@@ -19,7 +21,7 @@ class TopBottomNav extends StatelessWidget {
             style: TextStyle(fontSize: 35, color: Colors.white),
           ),
           Text(
-            "ZMW ${ledger["ledgerBalance"]}",
+            "ZMW ${user.float}",
             style: TextStyle(fontSize: 15, color: Colors.white),
           ),
         ],
@@ -30,7 +32,7 @@ class TopBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _userService.getLedger(),
+        future: _userService.getUser(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -50,11 +52,11 @@ class TopBottomNav extends StatelessWidget {
                 ),
               );
             case ConnectionState.done:
-              print(snapshot.data);
               if (snapshot.hasError) {
                 return Padding(
-                    padding: EdgeInsets.all(25), child: Text(snapshot.error));
+                    padding: EdgeInsets.all(25), child: Text('user not found'));
               }
+              print(' wwwoooooooo ${snapshot.data}');
 
               return _buildLedgerData(context, snapshot.data);
           }

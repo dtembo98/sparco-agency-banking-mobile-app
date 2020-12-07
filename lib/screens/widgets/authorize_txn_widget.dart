@@ -1,5 +1,6 @@
 import 'package:testingprintpos/services/authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:testingprintpos/utils/constants.dart';
 
 class AuthTxnWidgetContent extends StatefulWidget {
   final Function onProcessCallBack;
@@ -12,19 +13,19 @@ class AuthTxnWidgetContent extends StatefulWidget {
 
 class _AuthTxnWidgetContentState extends State<AuthTxnWidgetContent> {
   bool _isLoading = false;
-  TextEditingController _passCodeController = TextEditingController();
+  TextEditingController _passCodeController =
+      TextEditingController(text: AgentPassword);
   AuthService _authService = AuthService();
   String _msg;
 
-  void _authorizeTxn(String password) {
+  void _authorizeTxn(String password) async {
     setState(() {
       _isLoading = true;
       _msg = "Authorizing Transaction";
     });
 
-    _authService.authTxn(password).then((txnAuthStatus) {
-      print('txnAuthStatus');
-      print(txnAuthStatus);
+    await _authService.authTxn(password).then((txnAuthStatus) {
+      print(' authtxn response $txnAuthStatus');
       if (txnAuthStatus) {
         print("Process Txn");
         _msg = "Transaction Authorized";
@@ -34,19 +35,45 @@ class _AuthTxnWidgetContentState extends State<AuthTxnWidgetContent> {
       } else {
         _msg = "Error authorizing transaction";
       }
-    }).catchError((err) {
-      print("Txn Auth $err");
-      _msg = err.toString();
+    }).catchError((e) {
+      print(' authtxn response error ${e.toString()}');
+      setState(() {
+        _isLoading = false;
+        _msg = "error connecting to server";
+      });
     }).whenComplete(() {
       setState(() {
         _isLoading = false;
         _msg = _msg;
       });
     });
+
+    // _authService.authTxn(password).then((txnAuthStatus) {
+    //   print('txnAuthStatus');
+    //   print(txnAuthStatus);
+    //   if (txnAuthStatus) {
+    //     print("Process Txn");
+    //     _msg = "Transaction Authorized";
+    //     widget.onProcessCallBack();
+
+    //     Navigator.of(context).pop();
+    //   } else {
+    //     _msg = "Error authorizing transaction";
+    //   }
+    // }).catchError((err) {
+    //   print("Txn Auth $err");
+    //   _msg = err.toString();
+    // }).whenComplete(() {
+    //   setState(() {
+    //     _isLoading = false;
+    //     _msg = _msg;
+    //   });
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isObsecure = true;
     return AlertDialog(
       title: Text(
         'Enter passcode to proceed.',
@@ -64,13 +91,26 @@ class _AuthTxnWidgetContentState extends State<AuthTxnWidgetContent> {
                   )
                 : TextField(
                     controller: _passCodeController,
-                    obscureText: true,
+                    obscureText: isObsecure,
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
+                        suffix: IconButton(
+                          iconSize: 18.0,
+                          onPressed: () {
+                            print('some shit here $isObsecure');
+                            setState(() {
+                              isObsecure = !isObsecure;
+                            });
+                            print('some shit here $isObsecure');
+                          },
+                          icon: Icon(!isObsecure
+                              ? Icons.remove_red_eye_outlined
+                              : Icons.remove_red_eye_sharp),
+                        ),
                         hintText: "Enter Passcode",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5))),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                   ),
             Text(
               _msg ?? "",

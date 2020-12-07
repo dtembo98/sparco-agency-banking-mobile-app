@@ -20,10 +20,10 @@ class TxnStatusService {
           _controller.sink.add(txnData);
         }
       });
-
+      print(txnId);
       print("Tick ${t.tick}");
 
-      if (t.tick == 50) {
+      if (t.tick == 200) {
         t.cancel();
         _controller.sink.close();
       }
@@ -36,15 +36,21 @@ class TxnStatusService {
     prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
     try {
-      final res = await http.get('$API_BASE_URL/api/v1/transaction?id=$txnId',
-          headers: {'Content-Type': 'application/json', 'token': token});
+      final res = await http
+          .get('$API_BASE_URL/api/v1/agents/transactions/$txnId', headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+      print(res.body);
       if (res.statusCode == 200) {
-        Map res_data = json.decode(res.body);
-        if (res_data['is_error']) {
+        Map resData = json.decode(res.body);
+
+        if (resData['is_error']) {
           _txnData = TxnData(isError: true, msg: "Unable to get data");
+          print(_txnData.msg);
           return Future.value(_txnData);
-        } else {
-          _txnData = TxnData.fromJson(res_data['transaction']);
+        } else if (resData['message'] == "success") {
+          _txnData = TxnData.fromJson(resData['data']);
           return Future.value(_txnData);
         }
       } else {

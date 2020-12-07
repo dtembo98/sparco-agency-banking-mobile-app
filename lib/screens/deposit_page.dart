@@ -60,7 +60,7 @@ class _DepositPageState extends State<DepositPage> {
     );
   }
 
-  void _processTxn(String txnType) async {
+  void _processTxn(String txnType, {@required String pathName}) async {
     String msisdn = _msisdnInputController.text;
     double amount = double.parse(_amountInputController.text);
     String ref = _refInputController.text;
@@ -72,8 +72,8 @@ class _DepositPageState extends State<DepositPage> {
       _statusMsg = "";
     });
 
-    TxnData _txnData =
-        await _txnService.processTxn(txnType, msisdn, amount, ref: ref);
+    TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount,
+        ref: ref, pathName: pathName);
 
     String txnStatus = _txnData.status;
 
@@ -196,7 +196,7 @@ class _DepositPageState extends State<DepositPage> {
                                   child: Text("Try Again"),
                                   onPressed: () {
                                     //  _clearInputFields();
-                                    _processTxn('deposit');
+                                    _processTxn('deposit', pathName: 'deposit');
                                   }),
                         )
                       ],
@@ -221,7 +221,7 @@ class _DepositPageState extends State<DepositPage> {
 
                         authorizeTxnDialog(context, () {
                           // print("Callback Called When Transaction Authorized");
-                          _processTxn('deposit');
+                          _processTxn('deposit', pathName: 'deposit');
                         });
                       }),
           SizedBox(height: 10),

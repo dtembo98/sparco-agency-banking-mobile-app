@@ -62,7 +62,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         ),
         ListTile(
           title: Text("Identification(Passport)"),
-          subtitle: Text(_userData.passport ?? ""),
+          // subtitle: Text(_userData.passport ?? ""),
           // trailing: Icon(Icons.edit),
         ),
         ListTile(
@@ -84,6 +84,16 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         ListTile(
           title: Text("Account Type"),
           subtitle: Text("Admin | Agent"),
+          // trailing: Icon(Icons.edit),
+        ),
+        ListTile(
+          title: Text("Ledger Balance"),
+          subtitle: Text('K ${_userData.ledgerBalance}' ?? ""),
+          // trailing: Icon(Icons.edit),
+        ),
+        ListTile(
+          title: Text("Float"),
+          subtitle: Text('K ${_userData.float}' ?? ""),
           // trailing: Icon(Icons.edit),
         ),
       ],
@@ -111,7 +121,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               if (snapshot.hasError) {
                 return Center(child: Text(snapshot.error.toString()));
               }
-
+              print(snapshot.data);
               return _buildProfileData(snapshot.data);
 
             case ConnectionState.none:
