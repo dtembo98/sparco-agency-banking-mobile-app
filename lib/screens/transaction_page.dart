@@ -77,7 +77,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   ),
                   ListTile(
                     title: Text("Date Time"),
-                    subtitle: Text(_parseDateTime(_txnData.created)),
+                    subtitle: Text(_txnData.txnDateTime.toString()),
                   ),
                 ],
               );

@@ -74,27 +74,29 @@ class TxnService {
     try {
       final res = await http.get(
         '$API_BASE_URL/api/v1/agents/transactions/$txnId',
-        headers: {'Content-Type': 'application/json', 'token': token},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
       );
 
       if (res.statusCode == 200) {
         Map resData = json.decode(res.body);
-        print(' hil am loging from gettxn$resData');
+        print(' hil am loging from as map $resData');
         // Hive.box('txnData').add(resData);
-        if (resData['is_error']) {
-          _txnData = TxnData(isError: true);
-
+        if (resData['message'] == 'success') {
+          _txnData = TxnData.fromJson(resData['data']);
+          print(' hil am loging from gettxn${_txnData.amount}');
           return Future.value(_txnData);
-        } else {
-          _txnData = TxnData.fromJson(resData);
+        } else if (resData['is_error']) {
+          _txnData = TxnData(isError: true);
+          print(' hil am loging from auth err$_txnData');
           return Future.value(_txnData);
         }
-      } else {
-        _txnData = TxnData(isError: true);
-        return Future.value(_txnData);
       }
     } catch (e) {
       _txnData = TxnData(isError: true);
+      print(' hil am loging from catch err$_txnData');
       return Future.value(_txnData);
     }
   }

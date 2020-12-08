@@ -1,18 +1,18 @@
 class UserData {
-  String fname;
-  String lname;
-  String phone;
-  String email;
-  String nrc;
-  String passport;
-  String address;
-  bool isAdmin;
-  bool isAgent;
-  int ledgerBalance;
-  int float;
-  bool isError;
-  String msg;
-  String status;
+  dynamic fname;
+  dynamic lname;
+  dynamic phone;
+  dynamic email;
+  dynamic nrc;
+  dynamic passport;
+  dynamic address;
+  dynamic isAdmin;
+  dynamic isAgent;
+  dynamic ledgerBalance;
+  dynamic float;
+  dynamic isError;
+  dynamic msg;
+  dynamic status;
 
   UserData(
       {this.fname,

@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> _widgetList = [
     HomeWidget(optionStyle: optionStyle),
-    // TransactionsWidget(),
+    TransactionsWidget(),
     ProfileWidget()
   ];
 
@@ -34,8 +34,8 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _selectedIndex = index;
     });
-    stack.push(index);
-    print(stack.top());
+    // stack.push(index);
+    // print(stack.top());
     // if (_selectedIndex == 1) {
     //   Navigator.pushNamed(context, '/transaction_details');
     // }
@@ -94,11 +94,17 @@ class _MainPageState extends State<MainPage> {
       // body: HomeWidget(optionStyle: optionStyle),
 
       body: WillPopScope(
-          child: _widgetList[_selectedIndex],
+          child: IndexedStack(
+            index: _selectedIndex,
+            children: [
+              HomeWidget(optionStyle: optionStyle),
+              TransactionsWidget(),
+              ProfileWidget(),
+            ],
+          ),
           onWillPop: () {
-            stack.pop();
             setState(() {
-              _selectedIndex = stack.top();
+              _selectedIndex = 0;
             });
           }),
       bottomNavigationBar: BottomNavigationBar(

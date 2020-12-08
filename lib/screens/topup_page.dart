@@ -55,8 +55,13 @@ class _TopUpPageState extends State<TopUpPage> {
     //   'token':_txnData.token,
     //   ''
     // };
-    if (_txnData.status == 'TXN_UNSUCCESSFUL') {
+    print('zezeze ${_txnData.status}');
+    if (_txnData.status == 'TXN_UNSUCCESFULL') {
       _statusMsg = 'TopUp Failed';
+      _txnSucceeded = false;
+    }
+    if (_txnData.status) {
+      _statusMsg = 'TopUp Failed try again';
       _txnSucceeded = false;
     }
 

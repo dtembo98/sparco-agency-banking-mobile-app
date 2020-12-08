@@ -18,16 +18,19 @@ class TxnsService {
 
     try {
       final res = await http.get(
-        '$API_BASE_URL/api/v1/transactions?page=$page',
-        headers: {'Content-Type': 'application/json', 'token': token},
+        '$API_BASE_URL/api/v1/agents/transactions',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
       );
 
-      Map res_data = json.decode(res.body);
-
+      Map resData = json.decode(res.body);
+      print('what is happening $resData');
       if (res.statusCode == 200) {
         _txnsList = List<TxnData>.from(
-            res_data['transactions'].map((txn) => TxnData.fromJson(txn)));
-
+            resData['data'].map((txn) => TxnData.fromJson(txn)));
+        // print('what is happening ${_txnsList}');
         return Future.value(_txnsList);
       } else {
         return Future.error("Code: ${res.statusCode}, Error: ");
