@@ -1,5 +1,7 @@
 import 'dart:collection';
+import 'dart:io';
 
+import 'package:o_popup/o_popup.dart';
 import 'package:testingprintpos/models/settings.dart';
 import 'package:testingprintpos/screens/widgets/home_widget.dart';
 import 'package:testingprintpos/screens/widgets/profile_widget.dart';
@@ -8,7 +10,7 @@ import 'package:testingprintpos/screens/widgets/transactions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stack/stack.dart' as customeStack;
+// import 'package:stack/stack.dart' as customeStack;
 
 class MainPage extends StatefulWidget {
   @override
@@ -19,16 +21,16 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   Settings settings;
   int popedIndex;
-  customeStack.Stack<int> stack = customeStack.Stack<int>();
+  // customeStack.Stack<int> stack = customeStack.Stack<int>();
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  List<Widget> _widgetList = [
-    HomeWidget(optionStyle: optionStyle),
-    TransactionsWidget(),
-    ProfileWidget()
-  ];
+  // List<Widget> _widgetList = [
+  //   HomeWidget(optionStyle: optionStyle),
+  //   TransactionsWidget(),
+  //   ProfileWidget()
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -41,9 +43,9 @@ class _MainPageState extends State<MainPage> {
     // }
   }
 
-  Future<bool> _onBackButtonPress(index) {
-    _onItemTapped(index);
-  }
+  // Future<bool> _onBackButtonPress(index) {
+  //   _onItemTapped(index);
+  // }
 
   Future<Null> logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -103,9 +105,16 @@ class _MainPageState extends State<MainPage> {
             ],
           ),
           onWillPop: () {
-            setState(() {
-              _selectedIndex = 0;
-            });
+            if (_selectedIndex == 0) {
+              setState(() {
+                _selectedIndex = 2;
+              });
+            }
+            if (_selectedIndex != 0) {
+              setState(() {
+                _selectedIndex = 0;
+              });
+            }
           }),
       bottomNavigationBar: BottomNavigationBar(
         // backgroundColor: Colors.deepPurple,

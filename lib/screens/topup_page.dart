@@ -23,7 +23,7 @@ class _TopUpPageState extends State<TopUpPage> {
   TextEditingController _amountInputController = TextEditingController();
   TextEditingController _meterNumberInputController = TextEditingController();
   bool _isLoading = false;
-  bool _txnSucceeded = true;
+  bool _txnSuccefull = false;
   String statusMsg = "";
   TxnService _txnService = TxnService();
   int _txnId;
@@ -57,16 +57,25 @@ class _TopUpPageState extends State<TopUpPage> {
     // };
     print('zezeze ${_txnData.status}');
     if (_txnData.status == 'TXN_UNSUCCESFULL') {
-      _statusMsg = 'TopUp Failed';
-      _txnSucceeded = false;
+      setState(() {
+        _statusMsg = 'TopUp Failed ';
+        _txnSuccefull = false;
+      });
     }
-    if (_txnData.status) {
-      _statusMsg = 'TopUp Failed try again';
-      _txnSucceeded = false;
+    if (_txnData.isError) {
+      setState(() {
+        _statusMsg = 'TopUp Failed ensure meter number is correct';
+        _txnSuccefull = false;
+      });
     }
 
     if (_txnData.status == 'TXN_SUCCESSFUL') {
-      _statusMsg = 'TopUp was successful';
+      setState(() {
+        _statusMsg = 'TopUp was successful';
+
+        _txnSuccefull = true;
+      });
+      // _statusMsg = 'TopUp was successful';
       // final datas = await Future.value(_txnData);
       // String txntoken = _txnData.token;
       DateTime now = DateTime.now();
@@ -116,7 +125,7 @@ class _TopUpPageState extends State<TopUpPage> {
       _isLoading = false;
       _statusMsg = _statusMsg;
       _txnId = _txnData.txnId;
-      _txnSucceeded = _txnSucceeded;
+      _txnSuccefull = true;
     });
   }
 
@@ -209,13 +218,13 @@ class _TopUpPageState extends State<TopUpPage> {
             ),
             (_isLoading)
                 ? Center(child: CircularProgressIndicator())
-                : (_txnId != null)
+                : (_txnSuccefull)
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           Container(
-                            // opacity: _txnSucceeded ? 0 : 1,
-                            child: _txnSucceeded
+                            // opacity: _txnSuccefull ? 0 : 1,
+                            child: _txnSuccefull
                                 ? RaisedButton(
                                     onPressed: _printData,
                                     child: Text("print receipt"),
@@ -233,6 +242,9 @@ class _TopUpPageState extends State<TopUpPage> {
                               // icon: Icon(Icons.refresh),
                               onPressed: () {
                                 _clearInputFields();
+                                setState(() {
+                                  _txnSuccefull = false;
+                                });
                               }),
                         ],
                       )

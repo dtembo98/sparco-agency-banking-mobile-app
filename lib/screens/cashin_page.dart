@@ -47,7 +47,7 @@ class _CashInPageState extends State<CashInPage> {
     Stream<TxnData> txnStatusStream = TxnStatusService(_txnData.txnId).stream;
 
     txnStatusSub = txnStatusStream.listen((txnData) {
-      String txnStatus = _txnData.status;
+      String txnStatus = txnData.status;
       _txnId = txnData.txnId;
 
       String txnStatusMsg = "";

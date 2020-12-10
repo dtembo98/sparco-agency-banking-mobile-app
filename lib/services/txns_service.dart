@@ -18,7 +18,7 @@ class TxnsService {
 
     try {
       final res = await http.get(
-        '$API_BASE_URL/api/v1/agents/transactions',
+        '$API_BASE_URL/api/v1/agents/transactions/?page=$page&limit=10',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'

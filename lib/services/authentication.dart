@@ -20,7 +20,7 @@ class AuthService {
     try {
       final response = await http.post('$API_BASE_URL/api/v1/auth/agents/login',
           headers: {'Content-Type': 'application/json'},
-          body: json.encode({"mobile_number": phone, "password": password}));
+          body: json.encode({"mobile_wallet": phone, "password": password}));
 
       if (response.statusCode == 200) {
         // print("your responce  ${response.body}");

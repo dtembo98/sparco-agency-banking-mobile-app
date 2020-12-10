@@ -115,7 +115,11 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
       );
     } else {
       // final txnBox = Hive.box('txnData');
-
+      if (_txns.length < 1) {
+        return Center(
+          child: Text('No transaction made yet'),
+        );
+      }
       return ListView.builder(
         // scrollDirection: Axis.,
         // physics: ScrollPhysics(parent:),
@@ -126,6 +130,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
           if (index == _txns.length) {
             return _buildProgressIndicator();
           }
+
           // print('chai ${_txns[0].amount}');
           return Card(
             // decoration: BoxDecoration(border: Border(bottom: BorderSide())),

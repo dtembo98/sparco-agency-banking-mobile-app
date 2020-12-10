@@ -121,10 +121,11 @@ class _MyAppState extends State<MyApp> {
       title: "BroadPay Agent",
       // theme: (settings.isDarkTheme) ? dark : light,
       theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white60,
           brightness:
               (settings.isDarkTheme) ? Brightness.dark : Brightness.light,
           buttonTheme: ButtonThemeData(
-            buttonColor: Colors.blueAccent,
+            buttonColor: Colors.lightBlue[600],
             shape: RoundedRectangleBorder(),
             textTheme: ButtonTextTheme.primary,
           )),
