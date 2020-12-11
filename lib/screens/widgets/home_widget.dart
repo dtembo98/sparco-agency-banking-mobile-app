@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testingprintpos/models/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:testingprintpos/screens/widgets/service_providers.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({Key key, @required this.optionStyle, this.iconSize = 30})
@@ -12,12 +13,13 @@ class HomeWidget extends StatelessWidget {
 
   Widget _buildExpandedBtn(BuildContext context, IconData iconData,
       String serviceName, String routeName,
-      {String routeArgs, @required Color color}) {
+      {String routeArgs, Color color}) {
     return Expanded(
       child: Card(
-        color: color,
-        margin: EdgeInsets.all(10),
+        // color: color,
+        margin: EdgeInsets.all(5),
         child: InkWell(
+          enableFeedback: true,
           child: Column(
             children: <Widget>[
               // Material(
@@ -25,7 +27,7 @@ class HomeWidget extends StatelessWidget {
               // shape: CircleBorder(),
               // color: Colors.amberAccent,
               Container(
-                height: 100,
+                height: 130,
                 child: Icon(
                   iconData,
                   size: iconSize,
@@ -73,33 +75,78 @@ class HomeWidget extends StatelessWidget {
         //         padding: const EdgeInsets.all(8.0),
         //         child: Text("SERVICES"),
         //       ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Column(
+            children: [
+              Text(
+                'Service Providers',
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ServiceProviders(),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Services',
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+              ),
+              Row(
+                children: <Widget>[
+                  _buildExpandedBtn(
+                    context,
+                    Icons.arrow_downward,
+                    "Deposit",
+                    "/deposit",
+                  ),
+                  _buildExpandedBtn(
+                    context,
+                    Icons.arrow_upward,
+                    "Withdraw",
+                    "/withdraw",
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         Row(
           children: <Widget>[
             _buildExpandedBtn(
-                context, Icons.arrow_downward, "Deposit", "/deposit",
-                color: Colors.teal),
+              context,
+              Icons.phone_android,
+              "Airtime",
+              "/topup",
+              routeArgs: "airtime",
+            ),
             _buildExpandedBtn(
-                context, Icons.arrow_upward, "Withdraw", "/withdraw",
-                color: Colors.teal),
+              context,
+              Icons.lightbulb_outline,
+              "Electricity",
+              "/topup",
+              routeArgs: "electricity",
+            ),
           ],
         ),
         Row(
           children: <Widget>[
-            _buildExpandedBtn(context, Icons.phone_android, "Airtime", "/topup",
-                routeArgs: "airtime", color: Colors.teal),
             _buildExpandedBtn(
-                context, Icons.lightbulb_outline, "Zesco", "/topup",
-                routeArgs: "electricity", color: Colors.teal),
-          ],
-        ),
-        Row(
-          children: <Widget>[
+              context,
+              Icons.arrow_downward,
+              " Cash In",
+              "/cashin",
+            ),
             _buildExpandedBtn(
-                context, Icons.arrow_downward, " Cash In", "/cashin",
-                color: Colors.teal),
-            _buildExpandedBtn(
-                context, Icons.arrow_upward, "Cash Out", "/cashout",
-                color: Colors.teal),
+              context,
+              Icons.arrow_upward,
+              "Cash Out",
+              "/cashout",
+            ),
           ],
         ),
         //     ],
@@ -112,6 +159,6 @@ class HomeWidget extends StatelessWidget {
 
 class ServiceBtnStyle {
   static TextStyle btnTxtStyle(BuildContext context) {
-    return TextStyle(fontSize: 15);
+    return TextStyle(fontSize: 16);
   }
 }

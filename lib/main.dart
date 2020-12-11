@@ -121,12 +121,21 @@ class _MyAppState extends State<MyApp> {
       title: "BroadPay Agent",
       // theme: (settings.isDarkTheme) ? dark : light,
       theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white60,
+          appBarTheme: (settings.isDarkTheme)
+              ? AppBarTheme(color: Colors.black38)
+              : AppBarTheme(
+                  color: Colors.blue[900],
+                ),
+          cardColor:
+              (!settings.isDarkTheme) ? Colors.blue[600] : Colors.blueGrey,
+          // scaffoldBackgroundColor: Colors.white,
           brightness:
               (settings.isDarkTheme) ? Brightness.dark : Brightness.light,
           buttonTheme: ButtonThemeData(
-            buttonColor: Colors.lightBlue[600],
-            shape: RoundedRectangleBorder(),
+            buttonColor:
+                (!settings.isDarkTheme) ? Colors.blue[900] : Colors.blueGrey,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             textTheme: ButtonTextTheme.primary,
           )),
       initialRoute: '/',
@@ -141,5 +150,5 @@ ThemeData light = ThemeData(
 
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
-  // primarySwatch: Colors.indigo,
+  // primarySwatch: Colors.black38,
 );
