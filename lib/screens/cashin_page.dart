@@ -51,7 +51,7 @@ class _CashInPageState extends State<CashInPage> {
       _txnId = txnData.txnId;
 
       String txnStatusMsg = "";
-      print(' data bo be proceesed ${txnStatus}');
+      print(' data bo be proceesed ${txnData}');
       // print('kllkjdslkfjsldf kljdkfjsd kjslajdakl $txnStatus');
       if (txnStatus == 'TXN_AUTH_PENDING') {
         txnStatusMsg = 'Waiting For Authorization. TxnID: ${_txnData.txnId}';

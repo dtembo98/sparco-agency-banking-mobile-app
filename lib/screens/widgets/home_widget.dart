@@ -79,18 +79,18 @@ class HomeWidget extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10.0),
           child: Column(
             children: [
-              Text(
-                'Service Providers',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ServiceProviders(),
-              SizedBox(
-                height: 20,
-              ),
+              // Text(
+              //   'Service Providers',
+              //   textAlign: TextAlign.left,
+              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // ServiceProviders(),
+              // SizedBox(
+              //   height: 20,
+              // ),
               Text(
                 'Services',
                 textAlign: TextAlign.left,

@@ -23,7 +23,7 @@ class TxnStatusService {
       print(txnId);
       print("Tick ${t.tick}");
 
-      if (t.tick == 200) {
+      if (t.tick == 50) {
         t.cancel();
         _controller.sink.close();
       }

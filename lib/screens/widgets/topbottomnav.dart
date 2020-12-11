@@ -21,7 +21,7 @@ class TopBottomNav extends StatelessWidget {
             style: TextStyle(fontSize: 35, color: Colors.white),
           ),
           Text(
-            "ZMW ${user.float}",
+            "ZMW ${user.ledgerBalance}",
             style: TextStyle(fontSize: 15, color: Colors.white),
           ),
         ],
