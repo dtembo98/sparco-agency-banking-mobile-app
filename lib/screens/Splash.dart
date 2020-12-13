@@ -15,7 +15,7 @@ class _SplashState extends State<Splash> {
   Future checkIsLogin() async {
     bool loginStatus = await _authService.checkLoginStatus();
     print(DateTime);
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 3), () {
       print(loginStatus);
       // print(DateTime.now());
       Navigator.of(context).pushReplacementNamed('/login');

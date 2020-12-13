@@ -13,9 +13,10 @@ class TxnStatusService {
   String token;
   TxnData _txnData;
 
-  TxnStatusService(int txnId) {
+  TxnStatusService(dynamic txnId) {
     Timer.periodic(Duration(seconds: 1), (t) {
       _fetchData(txnId).then((txnData) {
+        print('testing one two ${txnData.status}');
         if (!_controller.isClosed) {
           _controller.sink.add(txnData);
         }
@@ -41,24 +42,29 @@ class TxnStatusService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       });
-      print(res.body);
+
       if (res.statusCode == 200) {
         Map resData = json.decode(res.body);
-
-        if (resData['is_error']) {
-          _txnData = TxnData(isError: true, msg: "Unable to get data");
-          print(_txnData.msg);
-          return Future.value(_txnData);
-        } else if (resData['message'] == "success") {
+        print('fetching transaction ${resData['data']}');
+        // if (resData['is_error']) {
+        //   _txnData = TxnData(isError: true, msg: "Unable to get data");
+        //   print(_txnData);
+        //   return Future.value(_txnData);
+        // } else
+        if (resData['message'] == "success") {
           _txnData = TxnData.fromJson(resData['data']);
+
           return Future.value(_txnData);
         }
       } else {
         _txnData = TxnData(isError: true, msg: "Unable to get data");
+        print(_txnData);
+
         return Future.value(_txnData);
       }
     } catch (e) {
       _txnData = TxnData(isError: true, msg: "Unable to get data");
+      print(_txnData);
       return Future.value(_txnData);
     }
   }

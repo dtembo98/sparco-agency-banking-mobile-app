@@ -17,6 +17,9 @@ class HomeWidget extends StatelessWidget {
     return Expanded(
       child: Card(
         // color: color,
+
+        // shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.all(Radius.circular(100.0))),
         margin: EdgeInsets.all(5),
         child: InkWell(
           enableFeedback: true,
@@ -27,7 +30,7 @@ class HomeWidget extends StatelessWidget {
               // shape: CircleBorder(),
               // color: Colors.amberAccent,
               Container(
-                height: 130,
+                height: 100,
                 child: Icon(
                   iconData,
                   size: iconSize,
@@ -94,7 +97,7 @@ class HomeWidget extends StatelessWidget {
               Text(
                 'Services',
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
               ),
               Row(
                 children: <Widget>[
@@ -159,6 +162,6 @@ class HomeWidget extends StatelessWidget {
 
 class ServiceBtnStyle {
   static TextStyle btnTxtStyle(BuildContext context) {
-    return TextStyle(fontSize: 16);
+    return TextStyle(fontSize: 16, color: Colors.white);
   }
 }

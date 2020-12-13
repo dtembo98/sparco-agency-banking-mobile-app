@@ -39,23 +39,22 @@ class TxnService {
           }));
       Map resData = json.decode(res.body);
 
-      print(' checking responce  ${resData}');
-      print('checking status ${res.statusCode}');
+      // print(' checking responce  ${resData}');
+      // print('checking status ${res.statusCode}');
+      _txnData = TxnData.fromJson(resData);
       if (res.statusCode == 200) {
-        _txnData = TxnData.fromJson(resData);
-
         // Hive.box('txnData').add(_txnData);
 
         print(" transactions made now ${resData}");
 
         return Future.value(_txnData);
       } else if (resData['is_error']) {
-        print('${res.statusCode}');
+        print('${resData}');
         // Map resData = json.decode(res.body);
         print('Failed to load');
-        _txnData = TxnData(isError: true);
+        // _txnData = TxnData(isError: true);
         // Hive.box('txnData').add(_txnData);
-        // print('error  happend ${_txnData}');
+        print('error  happend ${_txnData}');
         return Future.value(_txnData);
       }
     } catch (e) {

@@ -82,7 +82,7 @@ class _DepositPageState extends State<DepositPage> {
     print('txnStatus');
     print(txnStatus);
 
-    if ((_txnData.status == 'TXN_UNSUCCESSFUL') |
+    if ((_txnData.status == 'TXN_UNSUCCESFULL') |
         (_txnData.status == 'AMOUNT_BELOW_MIN') |
         (_txnData.status == 'AMOUNT_ABOVE_MAX') |
         (_txnData.status == 'UNSUPPORTED_PROVIDER')) {
@@ -201,31 +201,35 @@ class _DepositPageState extends State<DepositPage> {
                         )
                       ],
                     )
-                  : RaisedButton(
-                      child: Text("Deposit"),
-                      onPressed: () {
-                        // _submitService();
-
-                        // _processTxn('deposit');
-                        if (_msisdnInputController.text.isEmpty) {
-                          showMySnackBar(
-                              "Depositor's number is required.", _scaffoldKey);
-                          return;
-                        }
-
-                        if (_amountInputController.text.isEmpty) {
-                          showMySnackBar("Amount is required.", _scaffoldKey);
-                          return;
-                        }
-                        FocusScope.of(context).requestFocus(FocusNode());
-
-                        authorizeTxnDialog(context, () {
-                          // print("Callback Called When Transaction Authorized");
-                          _processTxn('deposit', pathName: 'deposit');
-                        });
-                      }),
+                  : Center(
+                      child: Text(
+                      _statusMsg,
+                      style: TextStyle(color: Colors.redAccent),
+                    )),
           SizedBox(height: 10),
-          Center(child: Text(_statusMsg))
+          RaisedButton(
+              child: Text("Deposit"),
+              onPressed: () {
+                // _submitService();
+
+                // _processTxn('deposit');
+                if (_msisdnInputController.text.isEmpty) {
+                  showMySnackBar(
+                      "Depositor's number is required.", _scaffoldKey);
+                  return;
+                }
+
+                if (_amountInputController.text.isEmpty) {
+                  showMySnackBar("Amount is required.", _scaffoldKey);
+                  return;
+                }
+                FocusScope.of(context).requestFocus(FocusNode());
+
+                authorizeTxnDialog(context, () {
+                  // print("Callback Called When Transaction Authorized");
+                  _processTxn('deposit', pathName: 'deposit');
+                });
+              }),
         ]),
       ),
     );

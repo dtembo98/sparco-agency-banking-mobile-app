@@ -21,7 +21,7 @@ class _CashInPageState extends State<CashInPage> {
   TextEditingController _refInputController = TextEditingController();
   bool _isLoading = false;
   bool _txnSucceeded = false;
-  int _txnId;
+  dynamic _txnId;
   String _statusMsg = "";
   TxnService _txnService = TxnService();
 
@@ -43,16 +43,16 @@ class _CashInPageState extends State<CashInPage> {
 
     TxnData _txnData = await _txnService.processTxn(txnType, msisdn, amount,
         pathName: pathName);
-    print(" geting id hhere ${_txnData.txnId}");
-    Stream<TxnData> txnStatusStream = TxnStatusService(_txnData.txnId).stream;
+
+    Stream txnStatusStream = TxnStatusService(_txnData.txnId).stream;
 
     txnStatusSub = txnStatusStream.listen((txnData) {
       String txnStatus = txnData.status;
       _txnId = txnData.txnId;
 
       String txnStatusMsg = "";
-      print(' data bo be proceesed ${txnData}');
-      // print('kllkjdslkfjsldf kljdkfjsd kjslajdakl $txnStatus');
+      print(' data bo be proceesed ${txnStatus}');
+      print('kllkjdslkfjsldf kljdkfjsd kjslajdakl $_txnId');
       if (txnStatus == 'TXN_AUTH_PENDING') {
         txnStatusMsg = 'Waiting For Authorization. TxnID: ${_txnData.txnId}';
       } else if (txnStatus == 'TXN_AUTH_UNSUCCESSFUL') {

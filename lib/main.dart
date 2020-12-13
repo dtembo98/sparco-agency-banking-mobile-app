@@ -124,16 +124,17 @@ class _MyAppState extends State<MyApp> {
           appBarTheme: (settings.isDarkTheme)
               ? AppBarTheme(color: Colors.black38)
               : AppBarTheme(
-                  color: Colors.blue[900],
+                  color: Colors.lightBlue[800],
                 ),
           cardColor:
-              (!settings.isDarkTheme) ? Colors.blue[600] : Colors.blueGrey,
+              (!settings.isDarkTheme) ? Colors.lightBlue[800] : Colors.blueGrey,
           // scaffoldBackgroundColor: Colors.white,
           brightness:
               (settings.isDarkTheme) ? Brightness.dark : Brightness.light,
           buttonTheme: ButtonThemeData(
-            buttonColor:
-                (!settings.isDarkTheme) ? Colors.blue[900] : Colors.blueGrey,
+            buttonColor: (!settings.isDarkTheme)
+                ? Colors.lightBlue[800]
+                : Colors.blueGrey,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             textTheme: ButtonTextTheme.primary,

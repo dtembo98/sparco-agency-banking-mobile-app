@@ -21,6 +21,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   Settings settings;
   int popedIndex;
+  String txnFilter = 'all';
   // customeStack.Stack<int> stack = customeStack.Stack<int>();
 
   static const TextStyle optionStyle =
@@ -64,35 +65,67 @@ class _MainPageState extends State<MainPage> {
     // Stack<String> stack = Stack<String>();
 
     return Scaffold(
-      appBar: AppBar(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(5),
-          ),
-        ),
-        leading: IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            }),
-        title: Text(
-          "BroadPay Agent",
-          // style: TextStyle(letterSpacing: 2),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () {
-                logOut();
-              }),
-        ],
-        bottom: (_selectedIndex == 0)
-            ? PreferredSize(
-                preferredSize: Size.fromHeight(100.0), child: TopBottomNav())
-            : null,
-      ),
+      appBar: _selectedIndex == 1
+          ? AppBar(
+              title: Text("Transactions"),
+              actions: [
+                new DropdownButton<String>(
+                  value: txnFilter,
+                  iconEnabledColor: Colors.white,
+                  // style: TextStyle(color: Colors.white, fontSize: 18),
+                  items: <String>[
+                    'all',
+                    'airtime',
+                    'zesco',
+                    'Withdraw',
+                    'deposit',
+                    'cashin',
+                    'cashout',
+                  ].map((String value) {
+                    return new DropdownMenuItem<String>(
+                      value: value,
+                      child: new Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String data) {
+                    setState(() {
+                      txnFilter = data;
+                    });
+                  },
+                )
+                // IconButton(icon: Icon(Icons.pin_drop), onPressed: null)
+              ],
+            )
+          : AppBar(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(5),
+                ),
+              ),
+              leading: IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/settings');
+                  }),
+              title: Text(
+                "BroadPay Agent",
+                // style: TextStyle(letterSpacing: 2),
+              ),
+              centerTitle: true,
+              elevation: 0,
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.exit_to_app),
+                    onPressed: () {
+                      logOut();
+                    }),
+              ],
+              bottom: (_selectedIndex == 0)
+                  ? PreferredSize(
+                      preferredSize: Size.fromHeight(100.0),
+                      child: TopBottomNav())
+                  : null,
+            ),
       // body: HomeWidget(optionStyle: optionStyle),
 
       body: WillPopScope(
@@ -100,7 +133,7 @@ class _MainPageState extends State<MainPage> {
             index: _selectedIndex,
             children: [
               HomeWidget(optionStyle: optionStyle),
-              TransactionsWidget(),
+              TransactionsWidget(txnFilter.toLowerCase()),
               ProfileWidget(),
             ],
           ),

@@ -95,7 +95,7 @@ class _TopUpPageState extends State<TopUpPage> {
           'agent': '${_txnData.customerName}',
           'receipient': '${_txnData.recipient}',
           'token': '${_txnData.token}',
-          'meter': '${_txnData.meterNumber}',
+          'meter': '${meterNumber}',
           'amount': '${_txnData.amount}',
           'units': "${_txnData.amount}",
           'txnDate': '${now.day}/${now.month}/${now.year}',
@@ -224,7 +224,7 @@ class _TopUpPageState extends State<TopUpPage> {
                         children: <Widget>[
                           Container(
                             // opacity: _txnSuccefull ? 0 : 1,
-                            child: _txnSuccefull
+                            child: _txnSuccefull && _topUpType == 'electricity'
                                 ? RaisedButton(
                                     onPressed: _printData,
                                     child: Text("print receipt"),

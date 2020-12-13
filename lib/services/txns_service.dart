@@ -33,10 +33,11 @@ class TxnsService {
         // print('what is happening ${_txnsList}');
         return Future.value(_txnsList);
       } else {
-        return Future.error("Code: ${res.statusCode}, Error: ");
+        return Future.error("Faid to getting user Transactions ");
       }
     } catch (e) {
-      return Future.error("Error: $e");
+      return Future.error(
+          "Faid to getting user Transactions make sure you have internet connection ");
     }
   }
 }

@@ -17,7 +17,7 @@ class TopBottomNav extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Float",
+            "Ledger",
             style: TextStyle(fontSize: 35, color: Colors.white),
           ),
           Text(
