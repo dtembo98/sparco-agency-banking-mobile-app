@@ -56,7 +56,6 @@ class TopBottomNav extends StatelessWidget {
                 return Padding(
                     padding: EdgeInsets.all(25), child: Text('user not found'));
               }
-              print(' wwwoooooooo ${snapshot.data}');
 
               return _buildLedgerData(context, snapshot.data);
           }

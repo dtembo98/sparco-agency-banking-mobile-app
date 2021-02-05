@@ -68,18 +68,54 @@ class AuthService {
     String token = prefs.getString("token");
 
     final response =
-        await http.get('$API_BASE_URL/api/v1/reset-password?phone=$phone');
-
+        await http.post('$API_BASE_URL/api/v1/auth/agents/forgotpassword',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({"mobile_wallet": phone}));
+    // print(' my response ${phone}');
+    // print(' my response ${response.body}');
+    // print(' my response ${response.statusCode}');
     if (response.statusCode == 200) {
-      Map res_data = json.decode(response.body);
-      if (res_data['is_error']) {
-        return Future.value(false);
-      } else {
+      Map resData = json.decode(response.body);
+      // print(resData);
+      if (resData['status'] == 'SUCCESSFUL') {
+        print(resData);
         return Future.value(true);
+      } else {
+        print(resData);
+        return Future.value(false);
       }
     } else {
       return Future.value(false);
     }
+  }
+
+  Future<bool> finalresetPasscode(String agentID) async {
+    final response =
+        await http.post('$API_BASE_URL/api/v1/auth/agents/resetpassword',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({"agentId": agentID}));
+    print(' my final response $agentID');
+    print(' my final response ${response.body}');
+    print(' my final response ${response.statusCode}');
+    // if (response.statusCode == 200) {
+    //   Map resData = json.decode(response.body);
+    //   // print(resData);
+    //   if (resData['status'] == 'SUCCESSFUL') {
+    //     print(resData);
+    //     return Future.value(true);
+    //   } else {
+    //     print(resData);
+    //     return Future.value(false);
+    //   }
+    // } else {
+    //   return Future.value(false);
+    // }
   }
 
   Future<bool> authTxn(String password) async {
@@ -116,13 +152,17 @@ class AuthService {
 
     // try {
     //   final response =
-    //       await http.post('$API_BASE_URL/api/v1/auth/agents/authorize',
+    // await http.post('$API_BASE_URL/api/v1/auth/agents/forgetpassword',
+    //           await http.post('$API_BASE_URL/api/v1/auth/agents/resetpassword...agentId',
+
     //           headers: {
     //             'Content-Type': 'application/json',
     //             'Accept': 'application/json',
     //             'Authorization': 'Bearer $token'
     //           },
-    //           body: json.encode({"password": password}));
+    // body: json.encode({
+    //   "mobile_wallet": wallet,
+    //   "password": password}));
 
     //   if (response.statusCode == 200) {
     //     Map res_data = json.decode(response.body);

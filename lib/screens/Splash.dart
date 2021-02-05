@@ -18,13 +18,13 @@ class _SplashState extends State<Splash> {
     Future.delayed(Duration(seconds: 3), () {
       print(loginStatus);
       // print(DateTime.now());
-      Navigator.of(context).pushReplacementNamed('/login');
+      // Navigator.of(context).pushReplacementNamed('/login');
 
-      // if (loginStatus) {
-      //   Navigator.of(context).pushReplacementNamed('/home');
-      // } else {
-      //   Navigator.of(context).pushReplacementNamed('/login');
-      // }
+      if (loginStatus) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      } else {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
     });
   }
 

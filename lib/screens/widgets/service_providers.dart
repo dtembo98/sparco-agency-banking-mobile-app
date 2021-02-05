@@ -16,19 +16,19 @@ class ServiceProviders extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(left: 8, right: 2),
-              color: Colors.pink, // Yellow
+              color: Colors.pink,
               height: 130.0,
               width: 130.0,
             ),
             Container(
               margin: EdgeInsets.only(left: 8, right: 2),
-              color: Colors.redAccent, // Yellow
+              color: Colors.redAccent,
               height: 130.0,
               width: 130.0,
             ),
             Container(
               margin: EdgeInsets.only(left: 8, right: 2),
-              color: Colors.redAccent, // Yellow
+              color: Colors.redAccent,
               height: 130.0,
               width: 130.0,
             ),

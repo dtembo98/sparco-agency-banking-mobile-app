@@ -150,7 +150,7 @@ class _TopUpPageState extends State<TopUpPage> {
 
     if (_topUpType == 'electricity') {
       _recipientsLabelText = "Recipient's Phone Number";
-      _pageTitle = 'Zesco';
+      _pageTitle = 'utilities';
     }
 
     if (_topUpType == 'data') {

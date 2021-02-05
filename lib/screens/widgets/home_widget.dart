@@ -16,19 +16,11 @@ class HomeWidget extends StatelessWidget {
       {String routeArgs, Color color}) {
     return Expanded(
       child: Card(
-        // color: color,
-
-        // shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.all(Radius.circular(100.0))),
         margin: EdgeInsets.all(5),
         child: InkWell(
           enableFeedback: true,
           child: Column(
             children: <Widget>[
-              // Material(
-              // elevation: 4.0,
-              // shape: CircleBorder(),
-              // color: Colors.amberAccent,
               Container(
                 height: 100,
                 child: Icon(
@@ -57,43 +49,16 @@ class HomeWidget extends StatelessWidget {
     );
   }
 
-  // void initState() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  //   print(prefs);
-  // }
-
   @override
   Widget build(BuildContext context) {
     Settings settings = Provider.of<Settings>(context);
 
     return ListView(
       children: <Widget>[
-        // Card(
-        //   margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     children: <Widget>[
-        //       Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: Text("SERVICES"),
-        //       ),
         Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Column(
             children: [
-              // Text(
-              //   'Service Providers',
-              //   textAlign: TextAlign.left,
-              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // ServiceProviders(),
-              // SizedBox(
-              //   height: 20,
-              // ),
               Text(
                 'Services',
                 textAlign: TextAlign.left,

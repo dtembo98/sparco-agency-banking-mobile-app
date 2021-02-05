@@ -97,11 +97,9 @@ class _AuthTxnWidgetContentState extends State<AuthTxnWidgetContent> {
                         suffix: IconButton(
                           iconSize: 18.0,
                           onPressed: () {
-                            print('some shit here $isObsecure');
                             setState(() {
                               isObsecure = !isObsecure;
                             });
-                            print('some shit here $isObsecure');
                           },
                           icon: Icon(!isObsecure
                               ? Icons.remove_red_eye_outlined

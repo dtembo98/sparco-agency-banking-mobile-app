@@ -162,7 +162,7 @@ class _CashOutPageState extends State<CashOutPage> {
                         }
                         FocusScope.of(context).requestFocus(FocusNode());
                         authorizeTxnDialog(context, () {
-                          _processTxn('cashin', pathName: 'cashin');
+                          _processTxn('cashout', pathName: 'cashout');
                         });
                       }),
           SizedBox(height: 10),

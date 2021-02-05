@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 (_phone != null)
                     ? Text(
-                        'Confirm passcode reset for 0961453688.',
+                        'Confirm passcode reset.',
                         textAlign: TextAlign.center,
                       )
                     : TextField(),

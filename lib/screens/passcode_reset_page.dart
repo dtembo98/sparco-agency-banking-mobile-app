@@ -11,10 +11,12 @@ class _PasscodeResetPageState extends State<PasscodeResetPage> {
   String _phone;
   AuthService _authService = AuthService();
   TextEditingController _phoneController = TextEditingController();
+  TextEditingController _agentIdController = TextEditingController();
+
   TextEditingController _resetCodeController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String _msg;
-
+  String agentId;
   Future<void> _confirmPasscodeReset() async {
     return showDialog<void>(
       context: context,
@@ -45,9 +47,10 @@ class _PasscodeResetPageState extends State<PasscodeResetPage> {
                   // _phone = _phoneController.text;
                 });
                 _authService.resetPasscode(_phone).then((isReset) {
+                  print(' resetting password $isReset');
+
                   if (isReset) {
-                    _msg = "Passcode successfully reset";
-                    // Navigator.pushNamed(context, '/login');
+                    _finalReset();
                   } else {
                     _msg = "Passcode reset failed";
                   }
@@ -55,6 +58,72 @@ class _PasscodeResetPageState extends State<PasscodeResetPage> {
                   setState(() {
                     _isLoading = false;
                     _msg = _msg;
+                  });
+                });
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _finalReset() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Agent ID',
+            textAlign: TextAlign.center,
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  // readOnly: true,
+                  controller: _resetCodeController,
+                  decoration: InputDecoration(
+                      labelText: "Agent ID",
+                      hintText: "Enter Your Agent ID ",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0))),
+                  keyboardType: TextInputType.phone,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Proceed'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  _isLoading = true;
+                  // _phone = _phoneController.text;
+                });
+                _authService
+                    .finalresetPasscode(_resetCodeController.text)
+                    .then((isFinalReset) {
+                  print(' resetting password $isFinalReset');
+
+                  // if (isFinalReset) {
+                  //   _msg = "Passcode successfully reset";
+                  //   // Navigator.pushNamed(context, '/login');
+                  // } else {
+                  //   _msg = "Passcode reset failed";
+                  // }
+                }).whenComplete(() {
+                  setState(() {
+                    _isLoading = false;
+                    // _msg = _msg;
                   });
                 });
               },
